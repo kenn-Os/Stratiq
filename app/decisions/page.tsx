@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import TopBar from '@/components/dashboard/TopBar'
 import { formatRelativeDate, DECISION_STATUS_COLORS, DECISION_STATUS_LABELS } from '@/utils'
 import { GitBranch, Plus, ArrowRight, Zap } from 'lucide-react'
+import type { DecisionStatus } from '@/types'
 
 export const metadata = { title: 'Decisions' }
 
@@ -77,7 +78,7 @@ export default async function DecisionsPage() {
                         </span>
                         {decision.tags?.length > 0 && (
                           <div className="flex gap-1">
-                            {decision.tags.slice(0, 2).map(tag => (
+                            {decision.tags.slice(0, 2).map((tag: string) => (
                               <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-ink-faint">
                                 {tag}
                               </span>
@@ -102,8 +103,8 @@ export default async function DecisionsPage() {
                       </div>
                     )}
                     <div className="text-right">
-                      <span className={`text-[11px] font-medium ${DECISION_STATUS_COLORS[decision.status]}`}>
-                        {DECISION_STATUS_LABELS[decision.status]}
+                      <span className={`text-[11px] font-medium ${DECISION_STATUS_COLORS[decision.status as DecisionStatus]}`}>
+                        {DECISION_STATUS_LABELS[decision.status as DecisionStatus]}
                       </span>
                       <div className="text-[11px] text-ink-faint mt-0.5">{formatRelativeDate(decision.updated_at)}</div>
                     </div>

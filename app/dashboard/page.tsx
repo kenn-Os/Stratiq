@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import TopBar from '@/components/dashboard/TopBar'
 import DashboardContent from '@/components/dashboard/DashboardContent'
+import type { Decision } from '@/types'
 
 export const metadata = { title: 'Dashboard' }
 
@@ -16,6 +17,7 @@ export default async function DashboardPage() {
     .from('decisions')
     .select(`
       id, title, status, created_at, updated_at,
+      user_id, description, context, deadline, tags,
       simulation_results(id, created_at, results)
     `)
     .eq('user_id', user.id)
@@ -43,7 +45,7 @@ export default async function DashboardPage() {
         action={{ label: 'New Decision', href: '/decisions/new' }}
       />
       <DashboardContent
-        decisions={decisions || []}
+        decisions={(decisions as any as Decision[]) || []}
         totalDecisions={totalDecisions || 0}
         totalSimulations={simulations || 0}
       />
