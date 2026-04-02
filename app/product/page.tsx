@@ -24,7 +24,7 @@ const MODULES = [
   {
     icon: Shield,
     title: 'Risk Intelligence',
-    tagline: 'Know what you're accepting before you commit.',
+    tagline: "Know what you're accepting before you commit.",
     body: 'Every simulation surfaces risk factors, computes a risk matrix, and provides an overall risk classification — Low, Medium, High, or Critical. Understand the shape of your exposure before you move.',
     accent: '#8B5CF6',
   },
