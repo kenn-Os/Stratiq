@@ -65,7 +65,7 @@ export default function LoginPage() {
 
         <div className="relative z-10">
           <blockquote className="text-[28px] font-display font-bold text-ink-DEFAULT leading-tight mb-4">
-            "STRATIQ does not eliminate risk. It models it."
+            &quot;STRATIQ does not eliminate risk. It models it.&quot;
           </blockquote>
           <p className="text-[14px] text-ink-muted">
             The operating system for high-stakes decisions.

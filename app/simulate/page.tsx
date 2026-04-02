@@ -40,6 +40,7 @@ export default function SimulatePage() {
       setDecisions(decisions || [])
     }
     load()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const runSimulation = async () => {

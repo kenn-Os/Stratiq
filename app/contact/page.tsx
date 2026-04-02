@@ -39,7 +39,7 @@ export default function ContactPage() {
             >
               <CheckCircle size={40} className="text-risk-low mx-auto mb-4" />
               <h2 className="text-[20px] font-display font-bold text-ink-DEFAULT mb-2">Message received.</h2>
-              <p className="text-[14px] text-ink-muted">We'll respond within 1 business day.</p>
+              <p className="text-[14px] text-ink-muted">We&apos;ll respond within 1 business day.</p>
             </motion.div>
           ) : (
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
