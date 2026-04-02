@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
 import { createClient } from '@/lib/supabase/server'
 import { createCheckoutSession, FLW_PLANS } from '@/lib/flutterwave'
 import type { SubscriptionTier, BillingInterval } from '@/types'

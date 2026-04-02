@@ -2,10 +2,18 @@
 const Flutterwave = require('flutterwave-node-v3');
 import { SubscriptionTier, BillingInterval } from '@/types'
 
-export const flw = new Flutterwave(
-  process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY!,
-  process.env.FLW_SECRET_KEY!
-);
+let flwInstance: any = null;
+
+export function getFlwInstance() {
+  if (flwInstance) return flwInstance;
+  
+  flwInstance = new Flutterwave(
+    process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY!,
+    process.env.FLW_SECRET_KEY!
+  );
+  
+  return flwInstance;
+}
 
 // ── Pricing Config ───────────────────────────────────────
 export const FLW_PLANS: Record<SubscriptionTier, Record<BillingInterval, string | undefined>> = {
@@ -80,12 +88,14 @@ export async function createCheckoutSession({
     },
   };
 
+  const flw = getFlwInstance();
   const response = await flw.Transaction.initialize(payload);
   return response;
 }
 
 // ── Verify Transaction ───────────────────────────────────
 export async function verifyTransaction(transactionId: string) {
+  const flw = getFlwInstance();
   const response = await flw.Transaction.verify({ id: transactionId });
   return response;
 }
