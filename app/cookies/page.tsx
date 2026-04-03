@@ -50,7 +50,7 @@ export default function CookiesPage() {
 
             <h2>1. What are Cookies?</h2>
             <p>
-              Cookies are small text files stored on your device that allow us to recognize you and remember your preferences. They can be "session" cookies (deleted when you close your browser) or "persistent" cookies (remain until they expire or are deleted).
+              Cookies are small text files stored on your device that allow us to recognize you and remember your preferences. They can be &quot;session&quot; cookies (deleted when you close your browser) or &quot;persistent&quot; cookies (remain until they expire or are deleted).
             </p>
 
             <h2>2. Essential Cookies</h2>
@@ -70,7 +70,7 @@ export default function CookiesPage() {
 
             <h2>4. Third-Party Cookies</h2>
             <p>
-              In some cases, our third-party partners (like Flutterwave or SendGrid) may set their own cookies to facilitate their services within our platform. These are governed by their respective cookie policies.
+              In some cases, our third-party partners may set their own cookies to facilitate their services within our platform. These are governed by their respective cookie policies.
             </p>
 
             <h2>5. Managing Cookies</h2>

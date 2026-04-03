@@ -80,8 +80,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="text-ink-muted text-[15px] space-y-2 list-disc pl-6">
               <li><strong>Supabase:</strong> Database and authentication.</li>
-              <li><strong>Flutterwave:</strong> Payment processing.</li>
-              <li><strong>SendGrid:</strong> Email delivery.</li>
+              <li><strong>Stripe:</strong> Payment processing.</li>
             </ul>
 
             <h2>5. Your Rights</h2>

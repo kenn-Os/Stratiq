@@ -1,7 +1,7 @@
 # STRATIQ – Complete Setup Guide
 **Decide With Precision.**
 
-This guide walks you through every step required to deploy the STRATIQ Decision Intelligence Platform from scratch — including Next.js, Supabase, Stripe, and SendGrid setup.
+This guide walks you through every step required to deploy the STRATIQ Decision Intelligence Platform from scratch — including Next.js, Supabase, and Stripe setup.
 
 ---
 
@@ -12,13 +12,12 @@ This guide walks you through every step required to deploy the STRATIQ Decision 
 3. [Supabase Setup (Auth + Database)](#3-supabase-setup)
 4. [Database Schema Deployment](#4-database-schema-deployment)
 5. [Stripe Setup (Billing)](#5-stripe-setup)
-6. [SendGrid Setup (Email)](#6-sendgrid-setup)
-7. [Environment Variables](#7-environment-variables)
-8. [Run the Development Server](#8-run-locally)
-9. [Deploy to Production (Vercel)](#9-deploy-to-production)
-10. [Post-Deployment Checklist](#10-post-deployment-checklist)
-11. [Feature Flags & Customisation](#11-feature-flags--customisation)
-12. [Architecture Overview](#12-architecture-overview)
+6. [Environment Variables](#6-environment-variables)
+7. [Run the Development Server](#7-run-locally)
+8. [Deploy to Production (Vercel)](#8-deploy-to-production)
+9. [Post-Deployment Checklist](#9-post-deployment-checklist)
+10. [Feature Flags & Customisation](#10-feature-flags--customisation)
+11. [Architecture Overview](#11-architecture-overview)
 
 ---
 
@@ -35,7 +34,6 @@ git --version    # Any recent version
 You will also need accounts with:
 - [Supabase](https://supabase.com) — free tier is fine to start
 - [Stripe](https://stripe.com) — free test account
-- [SendGrid](https://sendgrid.com) — free tier (100 emails/day)
 - [Vercel](https://vercel.com) — for production deployment (optional)
 
 ---
@@ -173,82 +171,6 @@ You should see: `Success. No rows returned`
 
 ---
 
-## 5. Flutterwave Setup
-
-### 5a. Create a Flutterwave Account
-
-1. Go to [flutterwave.com](https://flutterwave.com) and sign up for a dashboard account.
-2. Complete the merchant onboarding process to accept live payments.
-
-### 5b. Get API Keys
-
-1. In your Flutterwave Dashboard, go to **Settings → API Keys**.
-2. Copy:
-   - **Public Key** → `NEXT_PUBLIC_FLW_PUBLIC_KEY`
-   - **Secret Key** → `FLW_SECRET_KEY`
-   - **Encryption Key** → `FLW_ENCRYPTION_KEY`
-
-For development, use the **Test mode** keys (prefixed with `FLWPUBK_TEST-` and `FLWSECK_TEST-`).
-
-### 5c. Create Payment Plans
-
-In the Flutterwave Dashboard, go to **Payments → Plans**:
-
-**Professional Plan**
-- Create a plan for the "Professional" tier.
-- Set the frequency (Monthly or Annual).
-- Copy the **Plan ID** and add it to your `.env.local`:
-  - `FLW_PRO_MONTHLY_PLAN_ID`
-  - `FLW_PRO_ANNUAL_PLAN_ID`
-
-Repeat for the **Enterprise** plan if applicable.
-
-### 5d. Set Up Flutterwave Webhooks
-
-1. Go to **Settings → Webhooks**.
-2. Endpoint URL: `https://yourdomain.com/api/flutterwave/webhook`.
-3. Secret Hash: Create a unique string (e.g., a UUID) and add it to `FLW_SECRET_HASH` in your `.env.local`.
-4. Enter the same Secret Hash in the Flutterwave Dashboard.
-5. Flutterwave will send a `verif-hash` header with every webhook for verification.
-
----
-
----
-
-## 6. SendGrid Setup
-
-### 6a. Create a SendGrid Account
-
-1. Go to [sendgrid.com](https://sendgrid.com) and sign up
-2. Free tier: 100 emails/day (sufficient for most startups)
-
-### 6b. Create an API Key
-
-1. Go to **Settings → API Keys → Create API Key**
-2. Name: `STRATIQ Production`
-3. Permissions: **Restricted Access**
-   - Mail Send: **Full Access**
-4. Click **Create & View**
-5. Copy the key → `SENDGRID_API_KEY`
-
-⚠️ You'll only see the key once. Save it immediately.
-
-### 6c. Verify Your Sender Domain (Critical for Deliverability)
-
-1. Go to **Settings → Sender Authentication**
-2. Click **"Authenticate Your Domain"**
-3. Enter your domain (e.g., `stratiq.io`)
-4. Follow the DNS record instructions provided
-5. Verify DNS propagation (can take up to 24 hours)
-
-### 6d. Set Environment Variables
-
-```env
-SENDGRID_API_KEY=SG.your_key_here
-SENDGRID_FROM_EMAIL=hello@stratiq.io
-SENDGRID_FROM_NAME=STRATIQ
-```
-
 ---
 
 ## 7. Environment Variables
@@ -260,22 +182,6 @@ Fill in `.env.local` with all collected values:
 NEXT_PUBLIC_SUPABASE_URL=https://abc123.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
-
-# ── Flutterwave ───────────────────────────────────────────
-NEXT_PUBLIC_FLW_PUBLIC_KEY=FLWPUBK_TEST-...
-FLW_SECRET_KEY=FLWSECK_TEST-...
-FLW_ENCRYPTION_KEY=FLW_ENCRYPTION_KEY_...
-FLW_SECRET_HASH=your_webhook_secret_hash
-
-FLW_PRO_MONTHLY_PLAN_ID=...
-FLW_PRO_ANNUAL_PLAN_ID=...
-FLW_ENTERPRISE_MONTHLY_PLAN_ID=...
-FLW_ENTERPRISE_ANNUAL_PLAN_ID=...
-
-# ── SendGrid ──────────────────────────────────────────────
-SENDGRID_API_KEY=SG.your_key
-SENDGRID_FROM_EMAIL=hello@stratiq.io
-SENDGRID_FROM_NAME=STRATIQ
 
 # ── Application ───────────────────────────────────────────
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -435,16 +341,6 @@ The simulation engine is in `lib/simulation/engine.ts`. It is intentionally tran
 - `calculateExpectedValue()` — EV with risk discount
 - `calculateConfidenceBand()` — uncertainty range
 
-### Adding New Email Templates
-
-In `lib/sendgrid/index.ts`, add a new function:
-```ts
-export async function sendYourEmail(to: string, ...) {
-  const content = `...`
-  await sgMail.send({ to, from: FROM, subject: '...', html: baseTemplate(content) })
-}
-```
-
 ---
 
 ## 12. Architecture Overview
@@ -495,8 +391,6 @@ stratiq/
 │   │   └── middleware.ts        # Auth middleware
 │   ├── stripe/
 │   │   └── index.ts             # Stripe client + helpers
-│   ├── sendgrid/
-│   │   └── index.ts             # Email templates + sender
 │   └── simulation/
 │       └── engine.ts            # Core simulation algorithm
 │
@@ -553,7 +447,6 @@ For questions about this codebase, refer to:
 - **Supabase docs**: https://supabase.com/docs
 - **Next.js docs**: https://nextjs.org/docs
 - **Stripe docs**: https://stripe.com/docs
-- **SendGrid docs**: https://docs.sendgrid.com
 - **Framer Motion**: https://www.framer.com/motion
 - **Recharts**: https://recharts.org
 

@@ -25,25 +25,11 @@ export default function AccountContent({ user, subscription }: AccountContentPro
   const tier = subscription?.tier || 'starter'
 
   const handleUpgrade = async (planTier: string) => {
-    setUpgradeLoading(true)
-    try {
-      const res = await fetch('/api/flutterwave/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: planTier, billing_interval: 'monthly' }),
-      })
-      const data = await res.json()
-      if (data.url) window.location.href = data.url
-    } finally {
-      setUpgradeLoading(false)
-    }
+    alert('Please contact support to upgrade your plan.')
   }
 
   const handleManageBilling = async () => {
-    // Flutterwave doesn't have a direct equivalent of Stripe Billing Portal 
-    // accessible via a simple API call like this. 
-    // Redirecting to the account page or a custom portal if needed.
-    alert('Billing management for Flutterwave is currently handled via support or the Dashboard.')
+    alert('Please contact support to manage your billing.')
   }
 
   const TABS = [
@@ -123,7 +109,7 @@ export default function AccountContent({ user, subscription }: AccountContentPro
                     </span>
                   </div>
                 </div>
-                {subscription?.flw_subscription_id && (
+                {subscription?.status === 'active' && (
                   <button
                     onClick={handleManageBilling}
                     className="btn-secondary text-[12px] flex items-center gap-1.5"

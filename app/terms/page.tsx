@@ -50,7 +50,7 @@ export default function TermsPage() {
 
             <h2>1. Service Description</h2>
             <p>
-              STRATIQ provides a Decision Intelligence platform that allows users to model, simulate, and analyze decisions using structured data frameworks. The service is provided "as is" and intended for analytical support, not as legal or financial advice.
+              STRATIQ provides a Decision Intelligence platform that allows users to model, simulate, and analyze decisions using structured data frameworks. The service is provided &quot;as is&quot; and intended for analytical support, not as legal or financial advice.
             </p>
 
             <h2>2. User Responsibilities</h2>
@@ -70,7 +70,7 @@ export default function TermsPage() {
 
             <h2>4. Subscription & Payments</h2>
             <p>
-              Access to some features of STRATIQ may require a paid subscription. Billing is managed via Flutterwave and is subject to their terms of service. You can cancel your subscription at any time; however, no partial refunds are provided for current biling cycles.
+              Access to some features of STRATIQ may require a paid subscription. Billing is managed through our payment processor and is subject to their terms of service. You can cancel your subscription at any time; however, no partial refunds are provided for current biling cycles.
             </p>
 
             <h2>5. Disclaimer of Accountability</h2>

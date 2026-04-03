@@ -23,8 +23,7 @@ Language TypeScript
 Styling Tailwind CSS with a custom design system
 Animation Framer Motion
 Backend Supabase with PostgreSQL, Auth, and RLS
-Payments Flutterwave for subscriptions
-Email SendGrid for transactional emails
+Payments Stripe for subscriptions
 Data Visuals Recharts
 Getting Started
 npm install
@@ -55,8 +54,6 @@ Authenticated Application
 Core Architecture
 lib/
 ├── supabase/ Authentication, database, middleware
-├── stripe/ Billing, subscriptions, webhooks
-├── sendgrid/ Email templates and delivery
 └── simulation/ Decision modelling and scoring engine
 Pricing
 Feature Starter Professional Enterprise
