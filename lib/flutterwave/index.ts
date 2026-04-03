@@ -7,27 +7,31 @@ let flwInstance: any = null;
 export function getFlwInstance() {
   if (flwInstance) return flwInstance;
   
-  flwInstance = new Flutterwave(
-    process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY!,
-    process.env.FLW_SECRET_KEY!
-  );
+  const publicKey = process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY || ''
+  const secretKey = process.env.FLW_SECRET_KEY || ''
+
+  if (!secretKey) {
+    console.warn('Flutterwave Secret Key is missing. Payments are disabled.')
+    return null
+  }
   
+  flwInstance = new Flutterwave(publicKey, secretKey);
   return flwInstance;
 }
 
 // ── Pricing Config ───────────────────────────────────────
 export const FLW_PLANS: Record<SubscriptionTier, Record<BillingInterval, string | undefined>> = {
   starter: {
-    monthly: process.env.FLW_STARTER_PLAN_ID!,
+    monthly: process.env.FLW_STARTER_PLAN_ID || 'placeholder-id',
     annual: undefined,
   },
   professional: {
-    monthly: process.env.FLW_PRO_MONTHLY_PLAN_ID!,
-    annual: process.env.FLW_PRO_ANNUAL_PLAN_ID!,
+    monthly: process.env.FLW_PRO_MONTHLY_PLAN_ID || 'placeholder-id',
+    annual: process.env.FLW_PRO_ANNUAL_PLAN_ID || 'placeholder-id',
   },
   enterprise: {
-    monthly: process.env.FLW_ENTERPRISE_MONTHLY_PLAN_ID!,
-    annual: process.env.FLW_ENTERPRISE_ANNUAL_PLAN_ID!,
+    monthly: process.env.FLW_ENTERPRISE_MONTHLY_PLAN_ID || 'placeholder-id',
+    annual: process.env.FLW_ENTERPRISE_ANNUAL_PLAN_ID || 'placeholder-id',
   },
 }
 
@@ -89,6 +93,9 @@ export async function createCheckoutSession({
   };
 
   const flw = getFlwInstance();
+  if (!flw) {
+    throw new Error('Flutterwave service is inactive. Please configure environment variables.')
+  }
   const response = await flw.Transaction.initialize(payload);
   return response;
 }
@@ -96,6 +103,9 @@ export async function createCheckoutSession({
 // ── Verify Transaction ───────────────────────────────────
 export async function verifyTransaction(transactionId: string) {
   const flw = getFlwInstance();
+  if (!flw) {
+    throw new Error('Flutterwave service is inactive. Please configure environment variables.')
+  }
   const response = await flw.Transaction.verify({ id: transactionId });
   return response;
 }

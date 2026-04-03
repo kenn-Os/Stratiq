@@ -13,6 +13,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
     }
 
+    if (!process.env.FLW_SECRET_KEY) {
+      return NextResponse.json({ error: 'Payment service is currently inactive' }, { status: 503 })
+    }
+
     const { tier, billing_interval }: { tier: SubscriptionTier; billing_interval: BillingInterval } =
       await request.json()
 
