@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Briefcase, TrendingUp, ShieldCheck, Zap, ArrowRight, BarChart4 } from 'lucide-react'
+import { Briefcase, TrendingUp, ShieldCheck, Zap, ArrowRight, BarChart3 } from 'lucide-react'
 import MarketingNav from '@/components/marketing/MarketingNav'
 import MarketingFooter from '@/components/marketing/MarketingFooter'
 
@@ -16,7 +16,7 @@ const USE_CASES = [
     accent: '#3B82F6',
   },
   {
-    icon: BarChart4,
+    icon: BarChart3,
     title: 'Product Strategy & Roadmap',
     tagline: 'Prioritisation by value and risk.',
     body: 'Moving beyond "Highest Paid Person Opinion" (HiPPO). Weigh features by expected impact, development complexity, and market risk. Create a roadmap backed by mathematical certainty.',
