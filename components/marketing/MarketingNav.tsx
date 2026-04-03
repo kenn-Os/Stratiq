@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
+import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/utils'
 
 const NAV_LINKS = [
@@ -42,14 +43,7 @@ export default function MarketingNav() {
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 relative">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2" y="2" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.9"/>
-                <rect x="17" y="2" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.4"/>
-                <rect x="2" y="17" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.4"/>
-                <rect x="17" y="17" width="13" height="13" rx="2" fill="#0EA5A4" opacity="0.9"/>
-              </svg>
-            </div>
+            <Logo size={32} />
             <span className="font-display font-700 text-[15px] tracking-[0.25em] text-ink-DEFAULT uppercase">
               STRATIQ
             </span>

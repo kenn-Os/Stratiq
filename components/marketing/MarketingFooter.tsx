@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Logo } from '@/components/ui/Logo'
 
 const FOOTER_LINKS = {
   Product: [
@@ -29,14 +30,7 @@ export default function MarketingFooter() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-8 h-8">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2" y="2" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.9"/>
-                  <rect x="17" y="2" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.4"/>
-                  <rect x="2" y="17" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.4"/>
-                  <rect x="17" y="17" width="13" height="13" rx="2" fill="#0EA5A4" opacity="0.9"/>
-                </svg>
-              </div>
+              <Logo size={32} />
               <span className="font-display font-bold text-[14px] tracking-[0.25em] text-ink-DEFAULT uppercase">
                 STRATIQ
               </span>

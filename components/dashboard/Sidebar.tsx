@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/utils'
 import { createClient } from '@/lib/supabase/client'
+import { Logo } from '@/components/ui/Logo'
 
 const NAV_ITEMS = [
   {
@@ -55,14 +56,7 @@ export default function Sidebar({ userEmail, userInitials = 'U', tier = 'starter
     <aside className="fixed left-0 top-0 h-screen w-[220px] bg-[#0E1117] border-r border-white/5 flex flex-col z-30">
       {/* Logo */}
       <Link href="/dashboard" className="flex items-center gap-3 px-5 py-5 border-b border-white/5">
-        <div className="w-7 h-7 flex-shrink-0">
-          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.9"/>
-            <rect x="17" y="2" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.4"/>
-            <rect x="2" y="17" width="13" height="13" rx="2" fill="#3B82F6" opacity="0.4"/>
-            <rect x="17" y="17" width="13" height="13" rx="2" fill="#0EA5A4" opacity="0.9"/>
-          </svg>
-        </div>
+        <Logo size={28} />
         <span className="font-display font-bold text-[13px] tracking-[0.2em] text-ink-DEFAULT uppercase">
           STRATIQ
         </span>
