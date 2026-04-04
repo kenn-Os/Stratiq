@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Zap, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react'
@@ -10,7 +10,7 @@ import { getInitials } from '@/utils'
 
 type SimulateState = 'idle' | 'loading' | 'success' | 'error'
 
-export default function SimulatePage() {
+function SimulateContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -202,5 +202,17 @@ export default function SimulatePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SimulatePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-charcoal-DEFAULT flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-stratiq-blue/30 border-t-stratiq-blue rounded-full animate-spin" />
+      </div>
+    }>
+      <SimulateContent />
+    </Suspense>
   )
 }
