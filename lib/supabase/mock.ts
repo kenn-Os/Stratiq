@@ -3,6 +3,8 @@
 /**
  * A robust Mock Supabase Client that handles common chaining methods 
  * and returns empty results instead of making network requests.
+ * This version is enhanced to handle more properties like 'storage'
+ * and provides a more resilient Proxy handler.
  */
 export const createMockClient = () => {
   const handler = (): any => {
@@ -46,8 +48,19 @@ export const createMockClient = () => {
         }
       }
 
-      if (prop === 'from') return handler
-      if (prop === 'rpc') return handler
+      if (prop === 'storage') {
+        return {
+          from: () => ({
+            upload: async () => ({ data: { path: 'mock-path' }, error: null }),
+            download: async () => ({ data: new Blob(), error: null }),
+            remove: async () => ({ data: [], error: null }),
+            list: async () => ({ data: [], error: null }),
+            getPublicUrl: () => ({ data: { publicUrl: 'https://placeholder.supabase.co/storage/v1/object/public/mock.png' } }),
+          })
+        }
+      }
+
+      if (prop === 'from' || prop === 'rpc') return handler
       
       // If the property is a method, return a handler
       return handler
