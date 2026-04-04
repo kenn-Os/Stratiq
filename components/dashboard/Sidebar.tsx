@@ -14,7 +14,6 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import { cn } from '@/utils'
-import { createClient } from '@/lib/supabase/client'
 import { Logo } from '@/components/ui/Logo'
 
 const NAV_ITEMS = [
@@ -45,10 +44,9 @@ interface SidebarProps {
 export default function Sidebar({ userEmail, userInitials = 'U', tier = 'starter' }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const supabase = createClient()
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
+    // Local mock sign out - simply navigate back to landing
     router.push('/')
   }
 

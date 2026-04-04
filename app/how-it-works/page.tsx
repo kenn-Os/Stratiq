@@ -135,7 +135,7 @@ export default function HowItWorksPage() {
             <p className="text-[16px] text-ink-muted mb-8 max-w-xl mx-auto">
               Join the organisations using STRATIQ to navigate uncertainty with logic and precision.
             </p>
-            <Link href="/auth/signup" className="btn-primary px-10 py-4 text-[16px] font-bold group">
+            <Link href="/dashboard" className="btn-primary px-10 py-4 text-[16px] font-bold group">
               Get Started Free
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>

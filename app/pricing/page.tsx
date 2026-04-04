@@ -16,7 +16,7 @@ const PLANS = [
     monthlyPrice: 0,
     annualPrice: 0,
     cta: 'Get Started Free',
-    href: '/auth/signup',
+    href: '/dashboard',
     featured: false,
     features: [
       { label: 'Up to 5 active decisions', included: true },
@@ -36,7 +36,7 @@ const PLANS = [
     monthlyPrice: 49,
     annualPrice: 39,
     cta: 'Start Professional',
-    href: '/auth/signup?plan=professional',
+    href: '/dashboard',
     featured: true,
     features: [
       { label: 'Up to 50 active decisions', included: true },

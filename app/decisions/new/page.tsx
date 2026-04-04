@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { Plus, Trash2, AlertCircle, ChevronDown, ChevronUp, Save, ArrowRight } from 'lucide-react'
 import TopBar from '@/components/dashboard/TopBar'
-import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/utils'
 import type { VariableType } from '@/types'
 
@@ -37,7 +36,6 @@ const genId = () => Math.random().toString(36).slice(2, 9)
 
 export default function NewDecisionPage() {
   const router = useRouter()
-  const supabase = createClient()
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -84,111 +82,11 @@ export default function NewDecisionPage() {
     setSaving(true)
 
     try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) throw new Error('Not authenticated')
-
-      // 1. Ensure user profile exists in public.users
-      const { error: userError } = await supabase
-        .from('users')
-        .upsert({ 
-          id: user.id, 
-          email: user.email, 
-          full_name: user.user_metadata?.full_name || null,
-          avatar_url: user.user_metadata?.avatar_url || null,
-          updated_at: new Date().toISOString()
-        })
+      // Simulate network delay for UI prototype
+      await new Promise(resolve => setTimeout(resolve, 1500))
       
-      if (userError) {
-        console.error('[User Upsert Error]', userError)
-        throw new Error(`Failed to initialize user profile: ${userError.message}`)
-      }
-
-      // 2. Create decision
-      const { data: decision, error: decisionError } = await supabase
-        .from('decisions')
-        .insert({
-          user_id: user.id,
-          title: title.trim(),
-          description: description.trim() || null,
-          context: context.trim() || null,
-          status: 'draft',
-          tags: [],
-        })
-        .select()
-        .single()
-
-      if (decisionError) {
-        console.error('[Decision Insert Error]', decisionError)
-        throw new Error(`Failed to create decision: [${decisionError.code}] ${decisionError.message}`)
-      }
-
-      // 3. Create options
-      const { data: createdOptions, error: optError } = await supabase
-        .from('decision_options')
-        .insert(options.map((o, i) => ({
-          decision_id: decision.id,
-          label: o.label.trim(),
-          description: o.description.trim() || null,
-          order_index: i,
-        })))
-        .select()
-
-      if (optError) {
-        console.error('[Options Insert Error]', optError)
-        throw new Error(`Failed to create options: ${optError.message}`)
-      }
-
-      // 4. Create variables
-      const { data: createdVars, error: varError } = await supabase
-        .from('variables')
-        .insert(variables.map((v, i) => ({
-          decision_id: decision.id,
-          name: v.name.trim(),
-          description: v.description.trim() || null,
-          weight: v.weight,
-          unit: v.unit.trim() || null,
-          variable_type: v.variable_type,
-          order_index: i,
-        })))
-        .select()
-
-      if (varError) {
-        console.error('[Variables Insert Error]', varError)
-        throw new Error(`Failed to create variables: ${varError.message}`)
-      }
-
-      // 5. Create empty variable scores for each option × variable
-      const scoresToInsert = []
-      for (const opt of createdOptions || []) {
-        for (const variable of createdVars || []) {
-          scoresToInsert.push({
-            option_id: opt.id,
-            variable_id: variable.id,
-            score: 5, // Default midpoint
-            raw_value: null,
-            notes: null,
-          })
-        }
-      }
-
-      const { error: scoresError } = await supabase.from('variable_scores').insert(scoresToInsert)
-      if (scoresError) {
-        console.error('[Scores Insert Error]', scoresError)
-        throw new Error(`Failed to initialize scores: ${scoresError.message}`)
-      }
-
-      // 6. Update status
-      const { error: statusError } = await supabase
-        .from('decisions')
-        .update({ status: 'in_progress' })
-        .eq('id', decision.id)
-
-      if (statusError) {
-        console.error('[Status Update Error]', statusError)
-        // Not fatal, but worth logging
-      }
-
-      router.push(`/decisions/${decision.id}`)
+      // Navigate to a mock detail page
+      router.push(`/decisions/mock-id`)
     } catch (err: unknown) {
       console.error('[handleSave Full Error]', err)
       const errorMessage = err instanceof Error ? err.message : 'Failed to create decision'

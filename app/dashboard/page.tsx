@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
 import TopBar from '@/components/dashboard/TopBar'
 import DashboardContent from '@/components/dashboard/DashboardContent'
 import type { Decision } from '@/types'
@@ -7,33 +5,32 @@ import type { Decision } from '@/types'
 export const metadata = { title: 'Dashboard' }
 
 export default async function DashboardPage() {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  // Mock data for UI prototype
+  const user = {
+    user_metadata: {
+      full_name: 'Demo User'
+    }
+  }
 
-  if (!user) redirect('/auth/login')
+  const decisions: any[] = [
+    {
+      id: '1',
+      title: 'Strategy Expansion Q3',
+      status: 'completed',
+      updated_at: new Date().toISOString(),
+      tags: ['Growth', 'Strategic'],
+    },
+    {
+      id: '2',
+      title: 'New Market Entry: APAC',
+      status: 'draft',
+      updated_at: new Date().toISOString(),
+      tags: ['Expansion', 'Risk'],
+    }
+  ]
 
-  // Fetch decisions
-  const { data: decisions } = await supabase
-    .from('decisions')
-    .select(`
-      id, title, status, created_at, updated_at,
-      user_id, description, context, deadline, tags,
-      simulation_results(id, created_at, results)
-    `)
-    .eq('user_id', user.id)
-    .order('updated_at', { ascending: false })
-    .limit(10)
-
-  // Stats
-  const { count: totalDecisions } = await supabase
-    .from('decisions')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-
-  const { count: simulations } = await supabase
-    .from('simulation_results')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', user.id)
+  const totalDecisions = 12
+  const simulations = 48
 
   const firstName = user.user_metadata?.full_name?.split(' ')[0] || 'there'
 

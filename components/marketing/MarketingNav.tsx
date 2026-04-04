@@ -70,13 +70,13 @@ export default function MarketingNav() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/auth/login"
+              href="/dashboard"
               className="text-[13px] font-medium text-ink-muted hover:text-ink-DEFAULT transition-colors px-4 py-2"
             >
-              Sign In
+              Demo Dashboard
             </Link>
             <Link
-              href="/auth/signup"
+              href="/dashboard"
               className="btn-primary text-[13px] py-2 px-5"
             >
               Get Started
@@ -122,10 +122,10 @@ export default function MarketingNav() {
                 </motion.div>
               ))}
               <div className="pt-6 flex flex-col gap-3">
-                <Link href="/auth/login" className="btn-secondary text-center justify-center">
-                  Sign In
+                <Link href="/dashboard" className="btn-secondary text-center justify-center">
+                  Demo Dashboard
                 </Link>
-                <Link href="/auth/signup" className="btn-primary justify-center">
+                <Link href="/dashboard" className="btn-primary justify-center">
                   Get Started Free
                 </Link>
               </div>

@@ -1,35 +1,38 @@
-import { redirect, notFound } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
 import TopBar from '@/components/dashboard/TopBar'
 import DecisionDetailContent from '@/components/dashboard/DecisionDetailContent'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const supabase = createClient()
-  const { data } = await supabase.from('decisions').select('title').eq('id', params.id).single()
-  return { title: data?.title || 'Decision' }
+  return { title: 'Strategic Decision Analysis' }
 }
 
 export default async function DecisionDetailPage({ params }: { params: { id: string } }) {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/auth/login')
-
-  const { data: decision } = await supabase
-    .from('decisions')
-    .select(`
-      *,
-      options:decision_options(
-        *,
-        variable_scores(*)
-      ),
-      variables(*),
-      simulation_results(*)
-    `)
-    .eq('id', params.id)
-    .eq('user_id', user.id)
-    .single()
-
-  if (!decision) notFound()
+  // Mock decision data for UI prototype
+  const decision: any = {
+    id: params.id,
+    title: 'Strategy Expansion Q3',
+    description: 'Evaluating market entry for South East Asia with risk discount.',
+    status: 'completed',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    options: [
+      { id: '1', title: 'Direct Entry', description: 'Establish local office' },
+      { id: '2', title: 'Partnership', description: 'Joint venture with local firm' }
+    ],
+    variables: [
+      { id: '1', name: 'Market Size', type: 'quantitative' },
+      { id: '2', name: 'Regulatory Risk', type: 'qualitative' }
+    ],
+    simulation_results: [{
+      id: 'sim1',
+      results: {
+        confidence_score: 87,
+        option_scores: [
+          { option_label: 'Direct Entry', score: 92 },
+          { option_label: 'Partnership', score: 78 }
+        ]
+      }
+    }]
+  }
 
   return (
     <div className="page-enter">

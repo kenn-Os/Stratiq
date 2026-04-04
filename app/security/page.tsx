@@ -8,33 +8,33 @@ import MarketingFooter from '@/components/marketing/MarketingFooter'
 const SECURITY_FEATURES = [
   {
     icon: Lock,
-    title: 'Row-Level Security',
-    body: 'All database access is controlled by Supabase Row-Level Security policies. Users can only access their own data — enforced at the database level, not just the application layer.',
+    title: 'Data Isolation',
+    body: 'In this standalone prototype, all decision frameworks are processed locally. Your strategic data never leaves your environment, ensuring absolute privacy by design.',
   },
   {
     icon: Key,
-    title: 'Encrypted at Rest & in Transit',
-    body: 'All data is encrypted at rest using AES-256. All transit is TLS 1.3 enforced. No unencrypted connections are accepted.',
+    title: 'Encrypted Communications',
+    body: 'All platform interactions are protected with TLS 1.3 encryption. We prioritise secure transmission protocols to safeguard your decision intelligence in transit.',
   },
   {
     icon: Shield,
-    title: 'Stripe Payment Security',
-    body: 'Payment processing is handled entirely by Stripe. STRATIQ never stores card data. Webhook signatures are validated on every request.',
+    title: 'Security Foundations',
+    body: 'STRATIQ is architected with security as a first-class concern. Our modular design allows for rapid deployment behind enterprise-grade firewalls and VPNs.',
   },
   {
     icon: Server,
-    title: 'Infrastructure',
-    body: 'Hosted on enterprise-grade infrastructure. Supabase PostgreSQL with automated backups, point-in-time recovery, and 99.9% uptime SLA.',
+    title: 'Infrastructure Integrity',
+    body: 'Future production environments will utilise SOC 2 Type II compliant infrastructure with automated backups and point-in-time recovery to ensure 99.9% availability.',
   },
   {
     icon: Eye,
-    title: 'No Data Selling',
-    body: 'Your decision data is your strategic intelligence. STRATIQ does not sell, share, or use your decision data for any purpose beyond serving your account.',
+    title: 'Intellectual Property Protection',
+    body: 'Your decision models are your unique competitive advantage. STRATIQ does not store, share, or analyse your private decision logic for any internal purpose.',
   },
   {
     icon: CheckCircle,
-    title: 'Input Sanitisation',
-    body: 'All user inputs are sanitised and validated server-side. API routes are protected with authentication checks. No client-side secrets.',
+    title: 'Verified Inputs',
+    body: 'All scenario inputs are subject to strict sanitisation and validation logic. Our simulation engine is built to handle complex datasets while maintaining system integrity.',
   },
 ]
 

@@ -128,7 +128,7 @@ export default function UseCasesPage() {
                 <span className="text-[12px] font-bold text-ink-DEFAULT flex items-center gap-2">
                    <Zap size={14} className="text-risk-low" /> {useCase.metric}
                 </span>
-                <Link href="/auth/signup" className="text-[11px] font-bold text-ink-muted group-hover:text-ink-DEFAULT flex items-center gap-1 uppercase tracking-widest">
+                <Link href="/dashboard" className="text-[11px] font-bold text-ink-muted group-hover:text-ink-DEFAULT flex items-center gap-1 uppercase tracking-widest">
                   View Case Study <ArrowRight size={11} />
                 </Link>
               </div>

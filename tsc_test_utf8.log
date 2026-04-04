@@ -1,5 +1,0 @@
-﻿app/dashboard/page.tsx(46,9): error TS2322: Type '{ id: any; title: any; status: any; created_at: any; updated_at: any; simulation_results: { id: any; created_at: any; results: any; }[]; }[]' is not assignable to type 'Decision[]'.
-  Type '{ id: any; title: any; status: any; created_at: any; updated_at: any; simulation_results: { id: any; created_at: any; results: any; }[]; }' is missing the following properties from type 'Decision': user_id, description, context, deadline, tags
-app/decisions/page.tsx(80,60): error TS7006: Parameter 'tag' implicitly has an 'any' type.
-app/decisions/page.tsx(105,67): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ draft: string; in_progress: string; simulated: string; decided: string; archived: string; }'.
-app/decisions/page.tsx(106,26): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ draft: string; in_progress: string; simulated: string; decided: string; archived: string; }'.

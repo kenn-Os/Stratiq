@@ -1,28 +1,42 @@
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
 import TopBar from '@/components/dashboard/TopBar'
 import { formatRelativeDate, DECISION_STATUS_COLORS, DECISION_STATUS_LABELS } from '@/utils'
-import { GitBranch, Plus, ArrowRight, Zap } from 'lucide-react'
+import { GitBranch, Plus, ArrowRight } from 'lucide-react'
 import type { DecisionStatus } from '@/types'
 
 export const metadata = { title: 'Decisions' }
 
 export default async function DecisionsPage() {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/auth/login')
-
-  const { data: decisions } = await supabase
-    .from('decisions')
-    .select(`
-      id, title, description, status, created_at, updated_at, tags,
-      options:decision_options(id),
-      variables(id),
-      simulation_results(id, results, created_at)
-    `)
-    .eq('user_id', user.id)
-    .order('updated_at', { ascending: false })
+  // Mock data for UI prototype
+  const decisions: any[] = [
+    {
+      id: '1',
+      title: 'Strategy Expansion Q3',
+      description: 'Evaluating market entry for South East Asia with risk discount.',
+      status: 'completed',
+      updated_at: new Date().toISOString(),
+      tags: ['Growth', 'Strategic'],
+      options: [1, 2, 3],
+      variables: [1, 2, 3, 4, 5],
+      simulation_results: [{
+        results: {
+          confidence_score: 87,
+          option_scores: [{ option_label: 'Direct Entry' }]
+        }
+      }]
+    },
+    {
+      id: '2',
+      title: 'New Market Entry: APAC',
+      description: 'High-level analysis of potential expansion costs.',
+      status: 'draft',
+      updated_at: new Date().toISOString(),
+      tags: ['Expansion', 'Risk'],
+      options: [1, 2],
+      variables: [1, 2, 3],
+      simulation_results: []
+    }
+  ]
 
   return (
     <div className="page-enter">

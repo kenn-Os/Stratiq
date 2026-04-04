@@ -62,7 +62,7 @@ export default function AboutPage() {
             </h2>
             <div className="h-1 w-20 bg-stratiq-blue rounded-full mb-8" />
             <p className="text-[16px] text-ink-muted leading-relaxed">
-              In most businesses, the most important decisions are still made by the "Highest Paid Person Opinion" or by flawed human intuition that is clouded by recency bias and emotional attachment.
+              In most businesses, the most important decisions are still made by the &quot;Highest Paid Person Opinion&quot; or by flawed human intuition that is clouded by recency bias and emotional attachment.
             </p>
             <p className="text-[16px] text-ink-muted leading-relaxed">
               STRATIQ was founded to bridge the gap between complex choices and clear outcomes. We provide the tools for leaders to model their thinking, simulate scenarios, and defend their conclusions with hard evidence.
@@ -127,7 +127,7 @@ export default function AboutPage() {
                   <Link href="/contact" className="btn-primary px-8 py-3.5 text-[14px] font-bold inline-flex">
                     Contact Us <MessageCircle size={15} className="ml-2" />
                   </Link>
-                  <Link href="/auth/signup" className="btn-secondary px-8 py-3.5 text-[14px] font-bold inline-flex">
+                  <Link href="/dashboard" className="btn-secondary px-8 py-3.5 text-[14px] font-bold inline-flex">
                     Join the Platform <ArrowRight size={15} className="ml-2" />
                   </Link>
                 </div>

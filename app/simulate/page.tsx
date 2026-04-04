@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Zap, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react'
 import TopBar from '@/components/dashboard/TopBar'
-import { createClient } from '@/lib/supabase/client'
 import Sidebar from '@/components/dashboard/Sidebar'
 import { getInitials } from '@/utils'
 
@@ -14,33 +13,28 @@ type SimulateState = 'idle' | 'loading' | 'success' | 'error'
 export default function SimulatePage() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const supabase = createClient()
 
   const decisionId = searchParams.get('decision')
   const [decisions, setDecisions] = useState<{ id: string; title: string }[]>([])
   const [selectedDecisionId, setSelectedDecisionId] = useState(decisionId || '')
   const [state, setState] = useState<SimulateState>('idle')
   const [error, setError] = useState<string | null>(null)
-  const [resultId, setResultId] = useState<string | null>(null)
   const [progress, setProgress] = useState(0)
-  const [user, setUser] = useState<any>(null)
+
+  // Mock user for UI prototype
+  const user = {
+    email: 'demo@stratiq.io',
+    user_metadata: {
+      full_name: 'Demo User'
+    }
+  }
 
   useEffect(() => {
-    const load = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-
-      const { data: decisions } = await supabase
-        .from('decisions')
-        .select('id, title')
-        .eq('user_id', user?.id)
-        .in('status', ['draft', 'in_progress'])
-        .order('updated_at', { ascending: false })
-
-      setDecisions(decisions || [])
-    }
-    load()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Mock decisions for UI prototype
+    setDecisions([
+      { id: '1', title: 'Strategy Expansion Q3' },
+      { id: '2', title: 'New Market Entry: APAC' }
+    ])
   }, [])
 
   const runSimulation = async () => {
@@ -49,33 +43,27 @@ export default function SimulatePage() {
     setError(null)
     setProgress(0)
 
-    // Animate progress
+    // Animate progress to simulate simulation engine running
     const progressInterval = setInterval(() => {
-      setProgress(p => Math.min(p + Math.random() * 15, 85))
-    }, 300)
+      setProgress(p => {
+        if (p >= 100) {
+          clearInterval(progressInterval)
+          return 100
+        }
+        return Math.min(p + Math.random() * 20, 100)
+      })
+    }, 400)
 
     try {
-      const response = await fetch('/api/simulate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ decision_id: selectedDecisionId }),
-      })
-
+      // Simulate simulation time
+      await new Promise(resolve => setTimeout(resolve, 3000))
+      
       clearInterval(progressInterval)
-
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Simulation failed')
-      }
-
-      const data = await response.json()
       setProgress(100)
-      setResultId(data.result_id)
       setState('success')
     } catch (err: unknown) {
       clearInterval(progressInterval)
-      const errorMessage = err instanceof Error ? err.message : 'Simulation failed'
-      setError(errorMessage)
+      setError('Simulation failed')
       setState('error')
     }
   }
@@ -83,8 +71,9 @@ export default function SimulatePage() {
   return (
     <div className="min-h-screen bg-charcoal-DEFAULT">
       <Sidebar
-        userEmail={user?.email}
-        userInitials={getInitials(user?.user_metadata?.full_name || user?.email || '')}
+        userEmail={user.email}
+        userInitials={getInitials(user.user_metadata.full_name)}
+        tier="pro"
       />
       <div className="pl-[220px] min-h-screen page-enter">
         <TopBar title="Scenario Simulation" subtitle="Apply weighted scoring and calculate expected values" />
@@ -145,7 +134,8 @@ export default function SimulatePage() {
                 <div className="score-bar-track">
                   <motion.div
                     className="score-bar-fill bg-stratiq-blue"
-                    style={{ width: `${progress}%` }}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.3 }}
                   />
                 </div>
@@ -166,7 +156,7 @@ export default function SimulatePage() {
                   <p className="text-[12px] text-ink-muted mt-0.5">Results have been calculated and saved.</p>
                 </div>
                 <button
-                  onClick={() => router.push(`/decisions/${selectedDecisionId}`)}
+                  onClick={() => router.push(`/decisions/${selectedDecisionId || 'mock-id'}`)}
                   className="btn-primary text-[13px] py-2 px-4 flex items-center gap-1.5"
                 >
                   View Results <ArrowRight size={13} />

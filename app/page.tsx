@@ -136,7 +136,7 @@ export default function HomePage() {
 
           {/* CTAs */}
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Link href="/auth/signup" className="btn-primary text-[15px] px-8 py-3.5 group">
+            <Link href="/dashboard" className="btn-primary text-[15px] px-8 py-3.5 group">
               Start Modelling Free
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -361,7 +361,7 @@ export default function HomePage() {
               <p className="text-[16px] text-ink-muted mb-8 max-w-lg mx-auto">
                 Join professionals and enterprises who model decisions with precision.
               </p>
-              <Link href="/auth/signup" className="btn-primary text-[15px] px-10 py-3.5 inline-flex group">
+              <Link href="/dashboard" className="btn-primary text-[15px] px-10 py-3.5 inline-flex group">
                 Get Started Free
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>

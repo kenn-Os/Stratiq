@@ -108,7 +108,7 @@ export default function ProductPage() {
 
         {/* CTA */}
         <div className="text-center mt-20">
-          <Link href="/auth/signup" className="btn-primary text-[15px] px-10 py-3.5 inline-flex group">
+          <Link href="/dashboard" className="btn-primary text-[15px] px-10 py-3.5 inline-flex group">
             Start Free Today
             <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>

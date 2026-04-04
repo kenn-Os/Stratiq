@@ -1,0 +1,31 @@
+﻿npx : 
+At line:1 char:1
++ npx next lint > 
+lint_log.txt 2>&1; type 
+lint_log.txt
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (:St  
+  ring) [], RemoteExcept   
+ ion
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+./app/about/page.tsx
+65:86  Error: `"` can be 
+escaped with `&quot;`, 
+`&ldquo;`, `&#34;`, 
+`&rdquo;`.  
+react/no-unescaped-entities
+65:114  Error: `"` can be 
+escaped with `&quot;`, 
+`&ldquo;`, `&#34;`, 
+`&rdquo;`.  
+react/no-unescaped-entities
+
+info  - Need to disable 
+some ESLint rules? Learn 
+more here: https://nextjs.o
+rg/docs/basic-features/esli
+nt#disabling-rules

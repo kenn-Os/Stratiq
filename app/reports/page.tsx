@@ -1,6 +1,4 @@
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
 import TopBar from '@/components/dashboard/TopBar'
 import Sidebar from '@/components/dashboard/Sidebar'
 import { getInitials, formatDate } from '@/utils'
@@ -9,31 +7,43 @@ import { FileText, Download, ExternalLink } from 'lucide-react'
 export const metadata = { title: 'Reports' }
 
 export default async function ReportsPage() {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/auth/login')
+  // Hardcoded dummy user for UI prototype
+  const user = {
+    email: 'demo@stratiq.io',
+    user_metadata: {
+      full_name: 'Demo User'
+    }
+  }
 
-  const { data: reports } = await supabase
-    .from('reports')
-    .select(`*, decision:decisions(title)`)
-    .eq('user_id', user.id)
-    .order('generated_at', { ascending: false })
+  // Mock data for UI prototype
+  const reports: any[] = [
+    {
+      id: '1',
+      title: 'Q3 Strategy Analysis',
+      decision_id: '1',
+      generated_at: new Date().toISOString(),
+      storage_path: '#',
+      decision: { title: 'Strategy Expansion Q3' }
+    },
+    {
+      id: '2',
+      title: 'APAC Market Entry Assessment',
+      decision_id: '2',
+      generated_at: new Date().toISOString(),
+      storage_path: '#',
+      decision: { title: 'New Market Entry: APAC' }
+    }
+  ]
 
-  const { data: subscription } = await supabase
-    .from('subscriptions')
-    .select('tier')
-    .eq('user_id', user.id)
-    .single()
-
-  const tier = subscription?.tier || 'starter'
-  const canGenerateReports = tier !== 'starter'
-  const fullName = user.user_metadata?.full_name || user.email || ''
+  const tier = 'pro'
+  const canGenerateReports = true
+  const initials = getInitials(user.user_metadata.full_name)
 
   return (
     <div className="min-h-screen bg-charcoal-DEFAULT">
       <Sidebar
         userEmail={user.email}
-        userInitials={getInitials(fullName)}
+        userInitials={initials}
         tier={tier}
       />
       <div className="pl-[220px] min-h-screen page-enter">
@@ -72,7 +82,7 @@ export default async function ReportsPage() {
                     <div>
                       <p className="text-[14px] font-semibold text-ink-DEFAULT">{report.title}</p>
                       <p className="text-[12px] text-ink-faint">
-                        {(report as any).decision?.title} · {formatDate(report.generated_at)}
+                        {report.decision?.title} · {formatDate(report.generated_at)}
                       </p>
                     </div>
                   </div>
